@@ -52,8 +52,8 @@ async function requestGpsPermission() {
   }
   function onPress(){
 	watchId = navigator.geolocation.watchPosition(
-		(position) => console.log("testAnything =  POSICION  OBTENIDA ",position.coords.latitude,position.coords.longitude)),
-		(err) => console.log("testAnything =  Errror obteniendo posicion GPS" + err);
+		(position) => console.log("testAnything =  Position Obtained ",position.coords.latitude,position.coords.longitude)),
+		(err) => console.log("testAnything =  Error in getting GPS position" + err);
 	console.log("testAnything = watchID :  "+watchId);
 }
 const AppContainer = createAppContainer(RootStack);
