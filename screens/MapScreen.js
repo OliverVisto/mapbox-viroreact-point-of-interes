@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 import proj4 from 'proj4'
 
-Mapbox.setAccessToken('YOUR_ACCESS_TOKEN');
+Mapbox.setAccessToken('YOUR_MAPBOX_ACCESS_TOKEN');
 const MAPBOX_KEY = "YOUR_MAPBOX_ACCESS_TOKEN";
 let MAPBOX_URL = ""; 
 /** Variables for calculating Polyline */
