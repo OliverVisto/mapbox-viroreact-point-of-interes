@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList, Alert } from 'react-native';
 import { ListItem, SearchBar} from "react-native-elements";
 import {getPois, contains} from '../api/index'
 import _ from 'lodash';
-//DATOS PARA ENVIAR
+//Data to send
 let arrayTest = [1,2,3];
 let textHomeToMap = "Home to Map";
 class HomeScreen extends React.Component {
@@ -16,11 +16,11 @@ class HomeScreen extends React.Component {
           error: null,
           query: "",
           fullData: [],
-          placeholderText: " ¿ Qué estás buscando ? ",
-          /** Parametros por defecto paras el POI */
+          placeholderText: " What are you looking for ? ",
+          /** Default parameters for POI*/
           actualDataLocation: [],
-          actualDataLat: -70.408542,
-          actualDataLon: -23.679465,
+          actualDataLat: 9.310883,
+          actualDataLon: 123.305574,
           actualPoiName: "",
           actualPoiId:""
       };
@@ -108,7 +108,7 @@ class HomeScreen extends React.Component {
           title={item.name}
           leftAvatar={{ source: { uri: item.image } }}
           /**
-           * Retorna objeto ITEM
+           * Returns Item Object
            */
           onPress={()=>this.searchItem(item)}
           /*
@@ -130,16 +130,16 @@ class HomeScreen extends React.Component {
       };
       toAR(){
         Alert.alert(
-          '¿Qué quieres hacer?',
-          'Elije una opción',
+          'What do you want to do?',
+          'Choose an option',
           [
             {
-              text: 'Volver',
+              text: 'Return',
               onPress: () => console.log('console.log("testAnything = Cancel Pressed'),
               style: 'cancel',
             },
             {
-              text: 'Ver Punto en el Mapa', 
+              text: 'See point on the map', 
               onPress: () => this.toSeeMapHandle(),
             },
           ],
