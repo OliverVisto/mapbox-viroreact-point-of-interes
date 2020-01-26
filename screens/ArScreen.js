@@ -36,7 +36,7 @@ class ArScreen extends React.Component {
 		arrayFromMapScreen = this.objectoToArray(navigation.getParam('toArScreen',null));
 		return(
 		<ViroARSceneNavigator 
-			apiKey="USE_YOUR_KEY_HERE"
+			
       initialScene={{scene: this.arScene}}/>
 		
     );
