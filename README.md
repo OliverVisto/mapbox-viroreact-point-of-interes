@@ -6,8 +6,8 @@
 <p>
   1.- <strong>Clone the repository : </strong>  <br />
   2.- <strong>Install modules : </strong> yarn install or mpn install; depending in how you manage your modules<br />
-  3.- <strong>Get a Mapbox Token:  and <a href="https://account.mapbox.com/auth/signup/">Mapbox</a></strong><br/>
-  4.- Use your Viro Key and Mapbox Token in <strong>MapScreen.js</strong> where says "YOUR_MAPBOX_ACCESS_TOKEN" <br/>
+  3.- <strong>Get a Mapbox Token:  <a href="https://account.mapbox.com/auth/signup/">Mapbox</a></strong><br/>
+  4.- Use your Mapbox Token in <strong>MapScreen.js</strong> where says "YOUR_MAPBOX_ACCESS_TOKEN" <br/>
   3.- Feel free to Use and Re-Use this code.
   
 </p>
