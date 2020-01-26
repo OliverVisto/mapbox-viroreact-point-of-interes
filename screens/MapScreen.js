@@ -5,18 +5,18 @@ import _ from 'lodash';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 import proj4 from 'proj4'
 
-Mapbox.setAccessToken('USE_YOUR_KEY_HERE');
-const MAPBOX_KEY = "USE_YOUR_KEY_HERE";
+Mapbox.setAccessToken('YOUR_ACCESS_TOKEN');
+const MAPBOX_KEY = "YOUR_MAPBOX_ACCESS_TOKEN";
 let MAPBOX_URL = ""; 
-/** Variables para calculo de Polyline */
-//Puntos polilyne para ArScreen para cálculo de polilyne
+/** Variables for calculating Polyline */
+//Polilyne points for ARScreen for calculation
 let pointsToDrawPolilyne = [];
-//Punto GPS desde watchPosition()
+//GPS point from watchPosition()
 let posCurrentLatLon = [];
-//Punto GPS desde pois.js
+//Gps Point from pois.js
 let posDestinationLatLon = [];
 
-//Datos Recibidos desde HomeScreen
+//Data received from HomeScreen
 let latitude,longitude,poiName = null;
 
 class MapScreen extends React.Component {
@@ -47,12 +47,12 @@ componentWillMount(){
 
 
   /**
-   * Obtencion de posicion actual para el calculo
-   * de Polyline en ArScreen.js
+   * Obtaining current position for calculation
+   * from Polyline in ArScreen.js
    */
 
   buttonUpdate(actualPosition,watchIdRemove){
-    if(actualPosition.timestamp !== 0){
+   if(actualPosition.timestamp !== 0){
       //Activate the button
 
       this.setState({ buttonDisable: false, buttonLoading: false });
@@ -60,9 +60,10 @@ componentWillMount(){
       posCurrentLatLon = [actualPosition.coords.longitude,actualPosition.coords.latitude];
       MAPBOX_URL = "https://api.mapbox.com/directions/v5/mapbox/walking/"+posCurrentLatLon[0]+","+posCurrentLatLon[1]+";"+posDestinationLatLon[0]+","+posDestinationLatLon[1]+".json?access_token="+MAPBOX_KEY+"&overview=simplified&geometries=geojson";
       this.calculatePointsToPolilyne(MAPBOX_URL);
-    }else{
-      console.log("testAnything =  Errror obteniendo posicion GPS");
     }
+  else{
+      console.log("testAnything = Error getting GPS position");
+    }	
   }
 
   
@@ -74,7 +75,7 @@ componentWillMount(){
     };
     watchId = navigator.geolocation.watchPosition(
       (position) => this.buttonUpdate(position,watchId),
-      (err) => console.log("testAnything =  Errror obteniendo posicion GPS" + err),watchPositionOptions);     
+      (err) => console.log("testAnything =  Errror getting GPS position" + err),watchPositionOptions);     
   }
 
     render() {
@@ -90,7 +91,7 @@ componentWillMount(){
           <View style={styles.containerButton}>
               <View style={styles.buttonContainer}>
                 <Button 
-                  title= "Realidad Aumentada"
+                  title= "Augmented Reality"
                   loading = {this.state.buttonLoading}
                   disabled={this.state.buttonDisable}
                   onPress={ () => this.arHandler() }
@@ -99,7 +100,7 @@ componentWillMount(){
               </View>
               <View style={styles.buttonContainer}>
                 <Button
-                  title="Volver"
+                  title="Return"
                   onPress={() => this.props.navigation.navigate('Home')}
                 />
               </View>
@@ -165,14 +166,14 @@ componentWillMount(){
     }
 
     /** 
-     * LOGICA CALCULO DE ARRAY PARA VIROREACT 
-     * Se habilita una vez que se ha encontrado la posicion actual
+     * Logic Calculation Array for ViroReact
+     * It is enabled once the current position has been found
      * 
-     * 1. Encontrar punto currentPosition()
-     * 2. Encontrar ruta con todos los puntos con getRoute() 
-     * 3. Transformar ruta de puntos GPS a puntos cartesianos
-     * 4. Restar puntos cartesianos con generatePolilyneArray()
-     * 5. Pasar arreglo hacia ArScreen y dibujar Polyline
+     * 1. Find point currentPosition()
+     * 2. Find rooute with all points with getRoute() 
+     * 3. Transform route from GPS points to cartesian points
+     * 4. Substract Cartesian points with generatePolilyneArray()
+     * 5. Pass arrangement to ARScreen and draw Polyline
      * 
      * 
      * */
@@ -196,11 +197,11 @@ componentWillMount(){
       return fetch(url)
         .then((response) => response.json())
         .then((responseJson) => {
-            //contiene la información devuelta por la consulta en URL_QUERY
+            //contains the information returned by the query in URL_QUERY
             const directions = responseJson;
-            //Retorna la ruta.
+            //Return the route
             auxDirections = directions['routes'][0]['geometry']["coordinates"];
-            //transforma la ruta de GPS a UTM
+            //transform the GPS route to UTM
             for (let i = 0; i < auxDirections.length; i++) {
               aux1.push(proj4(
                 "EPSG:4326",
@@ -208,8 +209,8 @@ componentWillMount(){
                 [auxDirections[i][0],auxDirections[i][1]]));
                 auxPointsUtm[i] = this.createObject(aux1[i][0],0,aux1[i][1]);
             }
-           //Resta punto inicial en UTM a puntos de ruta en UTM y lo almacena en el arreglo que 
-            //se pasará a ArScreen
+           //Substract starting point in UTM from waypoints in UTM and store it in the array that
+            //it will be passed to ARScreen
             aux2.push(proj4(
               "EPSG:4326",
               "+proj=utm +zone=19 +ellps=GRS80 +units=m +no_defs",
